@@ -17,7 +17,8 @@ function App() {
     <div>
       <h1>Counter with Redux</h1>
 
-      <button onClick={() => dispatch(increment())}>Increment</button>
+      <button onClick={() => dispatch(increment(1))}>Increment</button>
+      <button onClick={() => dispatch(increment(5))}>Increment by 5</button>
       <div>{count}</div>
       <button onClick={() => dispatch(decrement())}>Decrement</button>
     </div>
