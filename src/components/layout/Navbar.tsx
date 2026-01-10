@@ -17,7 +17,7 @@ const Navbar = () => {
             src={tasks_logo}
             alt=""
           />
-          <span className="font-bold">Task Master</span>
+          <span className="font-bold">Taskly</span>
         </Link>
       </div>
       <div className="flex gap-3 font-bold">
