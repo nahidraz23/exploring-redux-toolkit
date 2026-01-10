@@ -1,8 +1,6 @@
 // import { decrement, increment } from "./redux/features/counter/counterSlice";
 // import { useAppDispatch, useAppSelector } from "./redux/hook";
-
 import { Outlet } from "react-router";
-import { Button } from "./components/ui/button";
 import Navbar from "./components/layout/Navbar";
 
 function App() {

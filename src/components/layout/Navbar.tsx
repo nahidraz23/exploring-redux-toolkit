@@ -2,6 +2,7 @@ import React from "react";
 import tasks_logo from "@/assets/tasks_logo.svg";
 import { Link } from "react-router";
 import { Button } from "../ui/button";
+import { ModeToggle } from "../mode-toggler";
 
 const Navbar = () => {
   return (
@@ -23,8 +24,9 @@ const Navbar = () => {
         <Link to={"/tasks"}>Tasks</Link>
         <Link to={"/users"}>Users</Link>
       </div>
-      <div>
-       <Button>Login</Button>
+      <div className="flex gap-1">
+        <Button>Login</Button>
+        <ModeToggle />
       </div>
     </nav>
   );
