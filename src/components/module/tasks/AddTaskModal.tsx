@@ -33,6 +33,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { addTask } from "@/redux/features/task/taskSlice";
+import { useAppDispatch } from "@/redux/hook";
 import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -40,10 +42,13 @@ import { useForm } from "react-hook-form";
 const AddTaskModal = () => {
   const form = useForm();
   const [open, setOpen] = useState(false);
-//   const [date, setDate] = useState<Date | undefined>(undefined);
+  //   const [date, setDate] = useState<Date | undefined>(undefined);
+
+  const dispatch = useAppDispatch();
 
   const onSubmit = (data) => {
     console.log(data);
+    dispatch(addTask(data));
   };
 
   return (
@@ -103,18 +108,19 @@ const AddTaskModal = () => {
                     <FormLabel>Priority</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value || " "}
+                      defaultValue={field.value}
                     >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Please select priority"/>
+                      </SelectTrigger>
                       <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue>Please select priority</SelectValue>
-                        </SelectTrigger>
+                        <SelectContent defaultValue={field.value}>
+                          <SelectItem value="low">Low</SelectItem>
+                          <SelectItem value="medium">Medium</SelectItem>
+                          <SelectItem value="high">High</SelectItem>
+                        </SelectContent>
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Low">Low</SelectItem>
-                        <SelectItem value="Medium">Medium</SelectItem>
-                        <SelectItem value="High">High</SelectItem>
-                      </SelectContent>
+
                       <FormDescription />
                       <FormMessage />
                     </Select>
@@ -142,7 +148,9 @@ const AddTaskModal = () => {
                               id="date"
                               className="justify-between font-normal"
                             >
-                              {field.value ? field.value.toLocaleDateString() : "Select date"}
+                              {field.value
+                                ? field.value.toLocaleDateString()
+                                : "Select date"}
                               <ChevronDownIcon />
                             </Button>
                           </PopoverTrigger>
