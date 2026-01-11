@@ -35,9 +35,10 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { addTask } from "@/redux/features/task/taskSlice";
 import { useAppDispatch } from "@/redux/hook";
+import type { ITask } from "@/types";
 import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
 const AddTaskModal = () => {
   const form = useForm();
@@ -46,9 +47,8 @@ const AddTaskModal = () => {
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    dispatch(addTask(data));
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    dispatch(addTask(data as ITask));
   };
 
   return (
