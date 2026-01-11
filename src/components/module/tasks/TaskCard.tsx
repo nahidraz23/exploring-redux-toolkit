@@ -10,14 +10,19 @@ import {
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
+import { deleteTask, toggleIsCompleted } from "@/redux/features/task/taskSlice";
+import { useAppDispatch } from "@/redux/hook";
 import type { ITask } from "@/types";
 import { Trash2 } from "lucide-react";
+import UpdateTaskModal from "./UpdateTaskModal";
 
 interface IProps {
   task: ITask;
 }
 
 const TaskCard = ({ task }: IProps) => {
+    const dispatch = useAppDispatch();
+
   return (
     <Card>
       <CardHeader>
@@ -27,16 +32,18 @@ const TaskCard = ({ task }: IProps) => {
                 " bg-yellow-500" : task.priority === 'medium',
                 " bg-red-500" : task.priority === 'high'
             })}/>
-            <CardTitle>{task.title}</CardTitle>
+            <CardTitle className={cn({'line-through' : task.isCompleted})}>{task.title}</CardTitle>
         </div>
         <CardDescription>{task.description}</CardDescription>
         <CardAction className="flex items-center gap-2">
-          <Trash2 className="text-red-500 h-4" />
-          <Checkbox />
+          <Trash2 className="text-red-500 h-4" onClick={() => dispatch(deleteTask(task.id))}/>
+          <Checkbox checked={task.isCompleted} onClick={() => dispatch(toggleIsCompleted(task.id))}/>
         </CardAction>
       </CardHeader>
       <CardContent></CardContent>
-      <CardFooter></CardFooter>
+      <CardFooter>
+            <UpdateTaskModal task={task}/>
+      </CardFooter>
     </Card>
   );
 };
