@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogClose,
@@ -19,11 +20,27 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { ChevronDownIcon } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const AddTaskModal = () => {
   const form = useForm();
+  const [open, setOpen] = useState(false);
+//   const [date, setDate] = useState<Date | undefined>(undefined);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -36,9 +53,9 @@ const AddTaskModal = () => {
           <Button>Add Task</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-106.25">
-            <DialogDescription className="sr-only">
-                Fill out this form to add task
-            </DialogDescription>
+          <DialogDescription className="sr-only">
+            Fill out this form to add task
+          </DialogDescription>
           <DialogHeader>
             <DialogTitle>Add Task</DialogTitle>
           </DialogHeader>
@@ -49,11 +66,12 @@ const AddTaskModal = () => {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                        Title
-                    </FormLabel>
+                    <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input {...field} value={field.value || " "}/>
+                      <Input
+                        {...field}
+                        value={field.value || " "}
+                      />
                     </FormControl>
                     <FormDescription />
                     <FormMessage />
@@ -65,14 +83,85 @@ const AddTaskModal = () => {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                        Description
-                    </FormLabel>
+                    <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea {...field} value={field.value || " "}/>
+                      <Textarea
+                        {...field}
+                        value={field.value || " "}
+                      />
                     </FormControl>
                     <FormDescription />
                     <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="priority"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Priority</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value || " "}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue>Please select priority</SelectValue>
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Low">Low</SelectItem>
+                        <SelectItem value="Medium">Medium</SelectItem>
+                        <SelectItem value="High">High</SelectItem>
+                      </SelectContent>
+                      <FormDescription />
+                      <FormMessage />
+                    </Select>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="dueDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Due Date</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value || " "}
+                    >
+                      <FormControl>
+                        <Popover
+                          open={open}
+                          onOpenChange={setOpen}
+                        >
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              id="date"
+                              className="justify-between font-normal"
+                            >
+                              {field.value ? field.value.toLocaleDateString() : "Select date"}
+                              <ChevronDownIcon />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent
+                            className="w-auto overflow-hidden p-0"
+                            align="center"
+                          >
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              captionLayout="dropdown"
+                              onSelect={field.onChange}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </FormControl>
+                      <FormDescription />
+                      <FormMessage />
+                    </Select>
                   </FormItem>
                 )}
               />
