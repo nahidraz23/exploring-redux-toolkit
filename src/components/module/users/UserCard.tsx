@@ -2,12 +2,12 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { Checkbox } from "@/components/ui/checkbox";
 import { Trash2 } from "lucide-react";
 
-const UserCard = ({user}) => {
+const UserCard = () => {
     return (
     <Card>
       <CardHeader>
         <div className="flex items-center gap-2">
-            <CardTitle>{user.name}</CardTitle>
+            <CardTitle>Name</CardTitle>
         </div>
         {/* <CardDescription>{user.description}</CardDescription> */}
         <CardAction className="flex items-center gap-2">
@@ -15,7 +15,7 @@ const UserCard = ({user}) => {
           {/* <Checkbox checked={task.isCompleted} onClick={() => dispatch(toggleIsCompleted(task.id))}/> */}
         </CardAction>
       </CardHeader>
-      <CardContent></CardContent>
+      {/* <CardContent></CardContent> */}
       {/* <CardFooter>
             <UpdateTaskModal task={task}/>
       </CardFooter> */}
