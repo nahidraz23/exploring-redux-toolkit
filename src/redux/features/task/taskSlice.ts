@@ -90,8 +90,6 @@ export const selectTask = (state: RootState) => {
   } else {
     return state.todo.tasks;
   }
-
-  return state.todo.tasks;
 };
 
 export const selectFilter = (state: RootState) => {

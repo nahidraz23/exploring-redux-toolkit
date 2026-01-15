@@ -19,13 +19,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { addUser } from "@/redux/features/user/userSlice";
+import type { IUser } from "@/types";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 const AddUserModal = () => {
   const form = useForm();
+    const dispatch = useDispatch()
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    dispatch(addUser(data as IUser))
   };
 
   return (
