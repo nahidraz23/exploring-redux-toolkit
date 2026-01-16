@@ -7,6 +7,10 @@ const initialState = {
         {
             id: 'A21Fugrl0CwA4YUY1BTYu',
             name: 'Nahid'
+        },
+        {
+            id: '__vQgULmC5iUgjYGNbBe5',
+            name: 'Riyal'
         }
     ]
 }
