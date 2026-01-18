@@ -44,16 +44,22 @@ import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 const AddTaskModal = () => {
   const form = useForm();
   const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const users = useAppSelector(selectUser)
+  const users = useAppSelector(selectUser);
   //   const [date, setDate] = useState<Date | undefined>(undefined);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     dispatch(addTask(data as ITask));
+    setDialogOpen(false)
+    form.reset();
   };
 
+  console.log("Main Dialog: ",dialogOpen);
+  console.log("Date Dialog:  ", dialogOpen);
+
   return (
-    <Dialog>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <form>
         <DialogTrigger asChild>
           <Button>Add Task</Button>
@@ -112,7 +118,7 @@ const AddTaskModal = () => {
                       defaultValue={field.value}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Please select priority"/>
+                        <SelectValue placeholder="Please select priority" />
                       </SelectTrigger>
                       <FormControl>
                         <SelectContent defaultValue={field.value}>
@@ -139,15 +145,13 @@ const AddTaskModal = () => {
                       defaultValue={field.value}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Please select priority"/>
+                        <SelectValue placeholder="Please select priority" />
                       </SelectTrigger>
                       <FormControl>
                         <SelectContent defaultValue={field.value}>
-                          {
-                            users.map(user => (
-                              <SelectItem value={user.id}>{user.name}</SelectItem>
-                            ))
-                          }
+                          {users.map((user) => (
+                            <SelectItem value={user.id}>{user.name}</SelectItem>
+                          ))}
                         </SelectContent>
                       </FormControl>
 
@@ -169,8 +173,8 @@ const AddTaskModal = () => {
                     >
                       <FormControl>
                         <Popover
-                          open={open}
-                          onOpenChange={setOpen}
+                          // open={open}
+                          // onOpenChange={setOpen}
                         >
                           <PopoverTrigger asChild>
                             <Button
@@ -207,7 +211,7 @@ const AddTaskModal = () => {
                 <DialogClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </DialogClose>
-                <Button type="submit">Save</Button>
+                <Button  type="submit">Save</Button>
               </DialogFooter>
             </form>
           </Form>
